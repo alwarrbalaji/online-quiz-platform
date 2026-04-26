@@ -29,7 +29,6 @@ public class ResultDao {
             stmt.setInt(4, totalQuestions);
             stmt.executeUpdate();
         } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
@@ -59,7 +58,6 @@ public class ResultDao {
                 results.add(result);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
         }
         return results;
     }
@@ -95,7 +93,6 @@ public class ResultDao {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
         }
         return stats;
     }

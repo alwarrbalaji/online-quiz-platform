@@ -30,7 +30,6 @@ public class GenAIService {
                 System.err.println("ERROR: db.properties file not found in classpath.");
             }
         } catch (IOException ex) {
-            ex.printStackTrace();
         }
     }
 
@@ -113,7 +112,6 @@ public class GenAIService {
             return validJson;
 
         } catch (Exception e) {
-            e.printStackTrace();
             return createErrorResponse("Internal Server Error: " + e.getMessage());
         }
     }

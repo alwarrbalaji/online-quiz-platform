@@ -11,6 +11,20 @@ db.properties
 .project
 .settings/
 
+# Ignore VS Code settings
+.vscode/
+
 # Ignore server runtime files
 .tomcat/
 /Servers/
+
+# Ignore temporary debug/output files
+checkdb_error.txt
+compile_error_*.txt
+compile_error_no_clean.txt
+db_output.txt
+reset_output.txt
+seed_output.txt
+
+# Ignore test files
+test_quiz.jsp

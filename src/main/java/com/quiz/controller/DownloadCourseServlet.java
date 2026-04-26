@@ -13,8 +13,9 @@ import java.io.IOException;
 @WebServlet("/downloadCourse")
 public class DownloadCourseServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
-    private CourseDao courseDao = new CourseDao();
+    private final CourseDao courseDao = new CourseDao();
 
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             // 1. Get the course ID from the URL
@@ -25,12 +26,11 @@ public class DownloadCourseServlet extends HttpServlet {
 
             // 3. Pass the course data to the new printable JSP page
             request.setAttribute("course", course);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("course-printable.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/course-printable.jsp");
             dispatcher.forward(request, response);
 
         } catch (Exception e) {
-            e.printStackTrace();
-            response.sendRedirect("dashboard");
+            response.sendRedirect(request.getContextPath() + "/dashboard");
         }
     }
 }

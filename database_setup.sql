@@ -1,4 +1,6 @@
-DROP TABLE IF EXISTS results, options, questions, profiles, quizzes, users;
+SET FOREIGN_KEY_CHECKS = 0;
+DROP TABLE IF EXISTS lessons, courses, results, options, questions, profiles, quizzes, users;
+SET FOREIGN_KEY_CHECKS = 1;
 
 -- Recreate all tables with the correct structure.
 -- Table 1: users
@@ -6,8 +8,14 @@ CREATE TABLE users (
     id INT PRIMARY KEY AUTO_INCREMENT,
     username VARCHAR(50) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
-    email VARCHAR(100) NOT NULL UNIQUE
+    email VARCHAR(100) NOT NULL UNIQUE,
+    role VARCHAR(20) DEFAULT 'USER',
+    active BOOLEAN DEFAULT TRUE
 );
+
+-- Insert default admin user
+INSERT INTO users (username, password, email, role) VALUES ('admin', 'admin123', 'admin@zgen.com', 'ADMIN');
+INSERT INTO users (username, password, email, role) VALUES ('user1', 'user123', 'user1@zgen.com', 'USER');
 
 -- Table 2: quizzes (with the 'category' column)
 CREATE TABLE quizzes (
@@ -90,6 +98,34 @@ INSERT INTO options (question_id, option_text, is_correct) VALUES
 (7, 'Deletes rows from a table', FALSE), (7, 'Combines rows from two or more tables based on a related column', TRUE), (7, 'Creates a new table', FALSE),
 (8, '1NF', FALSE), (8, '2NF', FALSE), (8, '3NF', TRUE),
 (9, 'TRUNCATE is faster and cannot be rolled back', TRUE), (9, 'DELETE is faster and cannot be rolled back', FALSE), (9, 'They are functionally identical', FALSE);
+
+-- Table 7: courses
+CREATE TABLE courses (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    title VARCHAR(100) NOT NULL,
+    introduction TEXT,
+    created_by_user_id INT,
+    FOREIGN KEY (created_by_user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+-- Table 8: lessons
+CREATE TABLE lessons (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    course_id INT,
+    title VARCHAR(100) NOT NULL,
+    material TEXT,
+    FOREIGN KEY (course_id) REFERENCES courses(id) ON DELETE CASCADE
+);
+
+-- Table 9: feedback
+CREATE TABLE feedback (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(50) NOT NULL,
+    quiz_title VARCHAR(100) NOT NULL,
+    rating INT NOT NULL CHECK (rating >= 1 AND rating <= 5),
+    comment TEXT,
+    submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 
 -- Let you know the script is done.
 SELECT 'Database reset and seeded successfully!' AS status;

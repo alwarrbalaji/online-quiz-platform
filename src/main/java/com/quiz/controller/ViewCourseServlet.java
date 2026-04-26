@@ -33,13 +33,11 @@ public class ViewCourseServlet extends HttpServlet {
             request.setAttribute("course", course);
             
             // 4. Forward the request and the data to the JSP page for display
-            RequestDispatcher dispatcher = request.getRequestDispatcher("view-course.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/view-course.jsp");
             dispatcher.forward(request, response);
             
         } catch (NumberFormatException e) {
-            // Handle cases where the ID is not a valid number
-            e.printStackTrace();
-            response.sendRedirect("dashboard"); // Redirect to dashboard on error
+            response.sendRedirect(request.getContextPath() + "/dashboard"); // Redirect to dashboard on error
         }
     }
 }

@@ -32,8 +32,28 @@ public class QuizDao {
 	            quizzes.add(quiz);
 	        }
 	    } catch (SQLException e) {
-	        e.printStackTrace();
+	        System.err.println("QuizDao.getAllQuizzes() failed: " + e.getMessage());
 	    }
 	    return quizzes;
+	}
+
+	public Quiz getQuizById(int id) {
+	    String sql = "SELECT * FROM quizzes WHERE id = ?";
+	    try (Connection conn = DBConnection.getConnection();
+	         PreparedStatement ps = conn.prepareStatement(sql)) {
+	        ps.setInt(1, id);
+	        try (ResultSet rs = ps.executeQuery()) {
+	            if (rs.next()) {
+	                Quiz quiz = new Quiz();
+	                quiz.setId(rs.getInt("id"));
+	                quiz.setSubject(rs.getString("subject"));
+	                quiz.setCategory(rs.getString("category"));
+	                return quiz;
+	            }
+	        }
+	    } catch (SQLException e) {
+	        System.err.println("QuizDao.getQuizById() failed: " + e.getMessage());
+	    }
+	    return null;
 	}
 }

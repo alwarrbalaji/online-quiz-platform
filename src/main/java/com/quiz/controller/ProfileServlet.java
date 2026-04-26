@@ -32,7 +32,7 @@ public class ProfileServlet extends HttpServlet {
 
         // Security check: If the user isn't logged in, redirect them.
         if (currentUser == null) {
-            response.sendRedirect("login.jsp");
+            response.sendRedirect(request.getContextPath() + "/jsp/login.jsp");
             return; // Stop further execution
         }
 
@@ -46,16 +46,17 @@ public class ProfileServlet extends HttpServlet {
         request.setAttribute("user", currentUser); // Pass the main user object too
         request.setAttribute("userStats", stats); // Pass the new stats to the JSP
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("profile.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/profile.jsp");
         dispatcher.forward(request, response);
     }
     // Handles saving the updated profile
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false);
         User currentUser = (User) session.getAttribute("currentUser");
 
         if (currentUser == null) {
-            response.sendRedirect("login.jsp");
+            response.sendRedirect(request.getContextPath() + "/jsp/login.jsp");
             return;
         }
 

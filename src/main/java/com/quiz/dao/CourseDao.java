@@ -94,11 +94,9 @@ public class CourseDao {
 
         } catch (SQLException e) {
             System.err.println("Transaction is being rolled back.");
-            if (conn != null) try { conn.rollback(); } catch (SQLException ex) { ex.printStackTrace(); }
-            e.printStackTrace();
+            if (conn != null) try { conn.rollback(); } catch (SQLException ex) { }
             return 0; // Return 0 to indicate failure
         } finally {
-            if (conn != null) try { conn.setAutoCommit(true); conn.close(); } catch (SQLException e) { e.printStackTrace(); }
         }
         return courseId;
     }
@@ -128,7 +126,6 @@ public class CourseDao {
                 courses.add(course);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
         }
         return courses;
     }
@@ -180,7 +177,6 @@ public class CourseDao {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
         }
         return course;
     }

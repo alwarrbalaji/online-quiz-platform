@@ -48,7 +48,6 @@ public class QuestionDao {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
         }
         return questions;
     }

@@ -189,7 +189,7 @@
             <div class="nav-links">
                 <a href="#about">About</a>
                 <a href="#contact">Contact</a>
-                <a href="login.jsp" class="btn btn-nav btn-outline">Sign In</a>
+                <a href="jsp/login.jsp" class="btn btn-nav btn-outline">Sign In</a>
             </div>
         </div>
     </nav>
@@ -202,7 +202,7 @@
                 Unlock your full potential with personalized courses and smart quizzes. Our AI adapts to you, making learning efficient and engaging.
             </p>
             <div class="hero-actions">
-                <a href="register.jsp" class="btn btn-primary">Try Now</a>
+                <a href="jsp/register.jsp" class="btn btn-primary">Try Now</a>
                 <a href="#features" class="btn btn-secondary">Learn More</a>
             </div>
         </div>

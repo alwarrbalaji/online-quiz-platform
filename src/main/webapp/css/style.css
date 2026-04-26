@@ -1,5 +1,7 @@
 /* --- Global Settings & Variables --- */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap');
+
 
 :root {
     --primary: #BCD39C;
@@ -272,7 +274,6 @@ textarea.form-control {
 }
 /* --- Landing Page Styles --- */
 /* --- Global Settings & Variables (Updated for Teal Theme) --- */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap');
 
 :root {
     /* Teal/Turquoise Palette */

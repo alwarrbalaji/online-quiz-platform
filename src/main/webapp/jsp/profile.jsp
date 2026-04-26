@@ -16,12 +16,13 @@
         <aside class="sidebar">
             <div class="sidebar-header"><h2>LEARN-ED</h2></div>
             <ul class="sidebar-nav">
-                <li class="nav-item"><a href="dashboard"><i data-feather="grid"></i> Dashboard</a></li>
-                <li class="nav-item"><a href="create-course.jsp"><i data-feather="plus-circle"></i> Create Course</a></li>
-                <li class="nav-item"><a href="my-results"><i data-feather="check-square"></i> My Results</a></li>
-                <li class="nav-item active"><a href="profile"><i data-feather="user"></i> Profile</a></li>
+                <li class="nav-item"><a href="${pageContext.request.contextPath}/dashboard"><i data-feather="grid"></i> Dashboard</a></li>
+                <li class="nav-item"><a href="${pageContext.request.contextPath}/jsp/create-course.jsp"><i data-feather="plus-circle"></i> Create Course</a></li>
+                <li class="nav-item"><a href="${pageContext.request.contextPath}/my-results"><i data-feather="check-square"></i> My Results</a></li>
+                <li class="nav-item active"><a href="${pageContext.request.contextPath}/profile"><i data-feather="user"></i> Profile</a></li>
+                <li class="nav-item"><a href="${pageContext.request.contextPath}/rewards"><i data-feather="award"></i> My Rewards</a></li>
             </ul>
-            <div class="sidebar-footer"><a href="logout"><i data-feather="log-out"></i> Logout</a></div>
+            <div class="sidebar-footer"><a href="${pageContext.request.contextPath}/logout"><i data-feather="log-out"></i> Logout</a></div>
         </aside>
 
         <main class="main-content">
@@ -31,7 +32,7 @@
             </header>
 
             <div class="card">
-                <form action="profile" method="post">
+                <form action="${pageContext.request.contextPath}/profile" method="post">
                     <div class="form-group">
                         <label>Username</label>
                         <input type="text" class="form-control" value="${user.username}" disabled>
@@ -81,8 +82,8 @@
     feather.replace();
 
     // Data from our servlet
-    const correctAnswers = ${userStats.totalCorrectAnswers};
-    const totalQuestions = ${userStats.totalQuestionsAnswered};
+    const correctAnswers = Number("${userStats != null ? userStats.totalCorrectAnswers : 0}");
+    const totalQuestions = Number("${userStats != null ? userStats.totalQuestionsAnswered : 0}");
     const incorrectAnswers = totalQuestions - correctAnswers;
 
     // Chart configuration

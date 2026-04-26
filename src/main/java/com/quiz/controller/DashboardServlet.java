@@ -1,55 +1,83 @@
 package com.quiz.controller;
 
-import com.quiz.dao.QuizDao;
-import com.quiz.model.Quiz;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-import javax.servlet.RequestDispatcher;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.List;
-import javax.servlet.http.HttpSession; // For HttpSession
-import com.quiz.dao.CourseDao;       // For CourseDao
-import com.quiz.model.Course;         // For Course
-import com.quiz.model.User;           // For User
+import javax.servlet.http.HttpSession;
+
+import com.quiz.dao.CourseDao;
+import com.quiz.dao.QuizDao;
+import com.quiz.dao.RewardDao;
+import com.quiz.model.Course;
+import com.quiz.model.Quiz;
+import com.quiz.model.User;
+import com.quiz.model.UserStreak;
 
 @WebServlet("/dashboard")
 public class DashboardServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
-    
 
- // In com.quiz.controller.DashboardServlet.java
+    private QuizDao   quizDao;
+    private RewardDao rewardDao;
+    private CourseDao courseDao;
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    @Override
+    public void init() {
+        quizDao   = new QuizDao();
+        rewardDao = new RewardDao();
+        courseDao = new CourseDao();
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        // Session guard
         HttpSession session = request.getSession(false);
-        User currentUser = (session != null) ? (User) session.getAttribute("currentUser") : null;
+        User currentUser = (session != null)
+            ? (User) session.getAttribute("currentUser") : null;
 
-        // Security check
         if (currentUser == null) {
-            response.sendRedirect("login.jsp");
+            response.sendRedirect(request.getContextPath() + "/jsp/login.jsp");
             return;
         }
 
-        // --- This is the main change ---
-        // Fetch courses created ONLY by the current user
-        CourseDao courseDao = new CourseDao();
-        List<Course> userCourses = courseDao.getCoursesByUserId(currentUser.getId());
+        request.setAttribute("currentUser", currentUser);
 
-        // Pass the user-specific course list to the JSP
+        // Load user's private generated courses
+        List<Course> userCourses = courseDao.getCoursesByUserId(currentUser.getId());
         request.setAttribute("userCourses", userCourses);
 
-        // We will also keep the pre-made quizzes visible to everyone
-        QuizDao quizDao = new QuizDao();
+        // Load pre-made quizzes grouped by category (excluding AI generated ones for privacy)
         List<Quiz> allQuizzes = quizDao.getAllQuizzes();
-        Map<String, List<Quiz>> quizzesByCategory = allQuizzes.stream()
-            .collect(Collectors.groupingBy(Quiz::getCategory));
+        Map<String, List<Quiz>> quizzesByCategory = new LinkedHashMap<>();
+        for (Quiz quiz : allQuizzes) {
+            String cat = (quiz.getCategory() != null && !quiz.getCategory().trim().isEmpty())
+                ? quiz.getCategory() : "General";
+            
+            // Only add to global dashboard list if it's NOT an AI-generated course quiz
+            if (!"Generated".equalsIgnoreCase(cat)) {
+                quizzesByCategory
+                    .computeIfAbsent(cat, k -> new ArrayList<>())
+                    .add(quiz);
+            }
+        }
         request.setAttribute("quizzesByCategory", quizzesByCategory);
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("dashboard.jsp");
-        dispatcher.forward(request, response);
+        // Load streak for dashboard widget
+        UserStreak streak = rewardDao.getStreakByUserId(currentUser.getId());
+        request.setAttribute("streak", streak);
+
+        // ← FIXED: dashboard.jsp is inside jsp/ folder
+        request.getRequestDispatcher("/jsp/dashboard.jsp")
+               .forward(request, response);
     }
 }
