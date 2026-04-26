@@ -7,11 +7,11 @@ The project features a modern, responsive user interface and demonstrates core b
 ---
 
 ## 📸 Screenshot  
-![img alt](https://github.com/yogeshwtp/online-quiz-platform/blob/main/img/FireShot%20Capture%20012%20-%20Login%20-%20Quizzer%20-%20localhost.png)
-![img alt](https://github.com/yogeshwtp/online-quiz-platform/blob/main/img/FireShot%20Capture%20016%20-%20Register%20-%20Quizzer%20-%20localhost.png)
-![img alt](https://github.com/yogeshwtp/online-quiz-platform/blob/main/img/FireShot%20Capture%20013%20-%20Dashboard%20-%20localhost.png)
-![img alt](https://github.com/yogeshwtp/online-quiz-platform/blob/main/img/FireShot%20Capture%20014%20-%20Quiz%20in%20Progress%20-%20localhost.png)
-![img alt](https://github.com/yogeshwtp/online-quiz-platform/blob/main/img/FireShot%20Capture%20015%20-%20Quiz%20Results%20-%20localhost.png)
+![img alt](https://github.com/alwarrbalaji/online-quiz-platform/blob/main/img/FireShot%20Capture%20012%20-%20Login%20-%20Quizzer%20-%20localhost.png)
+![img alt](https://github.com/alwarrbalaji/online-quiz-platform/blob/main/img/FireShot%20Capture%20016%20-%20Register%20-%20Quizzer%20-%20localhost.png)
+![img alt](https://github.com/alwarrbalaji/online-quiz-platform/blob/main/img/FireShot%20Capture%20013%20-%20Dashboard%20-%20localhost.png)
+![img alt](https://github.com/alwarrbalaji/online-quiz-platform/blob/main/img/FireShot%20Capture%20014%20-%20Quiz%20in%20Progress%20-%20localhost.png)
+![img alt](https://github.com/alwarrbalaji/online-quiz-platform/blob/main/img/FireShot%20Capture%20015%20-%20Quiz%20Results%20-%20localhost.png)
 
 ## ✨ Key Features  
 - 🔐 **User Authentication**: Secure registration and login functionality  
